@@ -6,8 +6,8 @@ file2 = open("dane_mirror.txt", "w")
 
 # Zmiana znaku przy: Y, W, R
 # Y:
-pattern_minus_Y = re.compile('\s[Y]\s\=\s{2,5}\-\d{0,4}\.')
-pattern_Y = re.compile('\s[Y]\s\=\s{2,5}[^-]\d{0,4}\.')
+pattern_Y = re.compile('\s[Y]\s\=\s{2,5}[-]{0,1}\d{0,4}\.')
+
 # W:
 pattern_minus_W = re.compile('\s[W]\s\=\s{2,5}\-\d{0,4}\.')
 pattern_W = re.compile('\s[W]\s\=\s{2,5}[^-]\d{0,4}\.')
@@ -17,19 +17,31 @@ pattern_R = re.compile('\s[R]\s\=\s{2,5}[^-]\d{0,4}\.')
 
 for line in file:
 
-    if(re.search(pattern_W, line)):
-        #for i in re.findall(pattern_R, line):
-        for licznik in range(len(line)):
-            print (line)
-                #if line[licznik] == 'R':
-               #     line = "DFVEVEVEVEVEVETTVETBVETB"
+    if(re.search(pattern_Y, line)):
+        match = re.search(pattern_Y, line)
+        Y = match[0]
+        index = 28
+        line_list = []
+        line_list[:0] = line
+        while index >= 23:
+            if line_list[index].isnumeric():
+                pass
+            else:
+                if line_list[index] == ' ':
+                    line_list[index] = '-'
+                    line = ''.join(line_list)
+                    break
 
-    if (re.search(pattern_minus_W, line)):
-        for i in re.findall(pattern_minus_R, line):
-            for j, znak in enumerate(i):
-                print (j, znak[0])
-                if (znak != '-'):
-                    pass
+                if line_list[index] == '-':
+                    line_list[index] = ' '
+                    line = ''.join(line_list)
+                    break
+
+            index = index - 1
+
+        print(line)
+
+
    # line = line + "\n"
     file2.write(line)
    # print(line)
