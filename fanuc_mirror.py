@@ -1,8 +1,20 @@
 import re
+import os
+from pathlib import Path
+import glob
 
-filepath = "dane.txt"
-file = open(filepath, "r")
-file2 = open("dane_mirror.txt", "w")
+p = Path('mirror/')
+p.mkdir(exist_ok=True)
+
+
+txtfiles = []
+for file in glob.glob("*.txt"):
+    txtfiles.append(file)
+filename = txtfiles[0]
+
+file = open(filename, "r")
+filename = filename[:-4]
+file2 = open("mirror/"+filename+"_mirror.txt", "w")
 
 # Zmiana znaku przy: Y, W, R
 # Y:
