@@ -4,6 +4,32 @@ import re
 import os
 from pathlib import Path
 import glob
+import argparse
+
+arg = argparse.ArgumentParser()
+
+arg.add_argument('--X')
+arg.add_argument('--Y')
+arg.add_argument('--Z')
+arg.add_argument('--W')
+arg.add_argument('--P')
+arg.add_argument('--R')
+arguments = arg.parse_args()
+
+list_of_arguments = []
+if arguments.X:
+    list_of_arguments.append(arguments.X)
+if arguments.Y:
+    list_of_arguments.append(arguments.Y)
+if arguments.Z:
+    list_of_arguments.append(arguments.Z)
+if arguments.W:
+    list_of_arguments.append(arguments.W)
+if arguments.P:
+    list_of_arguments.append(arguments.P)
+if arguments.R:
+    list_of_arguments.append(arguments.R)
+print(list_of_arguments)
 
 p = Path('mirror/')
 p.mkdir(exist_ok=True)
@@ -16,93 +42,37 @@ filename = txtfiles[0]
 
 file = open(filename, "r")
 filename = filename[:-4]
-file2 = open("mirror/"+filename+"_mirror.txt", "w")
-
-# Zmiana znaku przy: Y, W, R
-# Y:
-pattern_Y = re.compile('\s[Y]\s\=\s{2,5}[-]{0,1}\d{0,4}\.')
-# W:
-pattern_W = re.compile('\s[W]\s\=\s{2,5}[-]{0,1}\d{0,4}\.')
-# R:
-pattern_R = re.compile('\s[R]\s\=\s{2,5}[-]{0,1}\d{0,4}\.')
+file2 = open("mirror/"+filename+"_mirror.txt", "w+")
 
 for line in file:
-
-    if(re.search(pattern_Y, line)):
-        for index, sign in enumerate(line):
-            if sign == 'Y':
-                start_index_pom = index
-                start_index = index + 9
-
-        line_list = []
-        line_list[:0] = line
-        while start_index >= start_index_pom:
-            if line_list[index].isnumeric():
-                pass
-            else:
-                if line_list[start_index] == ' ':
-                    line_list[start_index] = '-'
-                    line = ''.join(line_list)
-                    break
-                if line_list[start_index] == '-':
-                    line_list[start_index] = ' '
-                    line = ''.join(line_list)
-                    break
-
-            start_index = start_index - 1
-        # print(line)
-
-    if(re.search(pattern_R, line)):
-        for index, sign in enumerate(line):
-            if sign == 'R':
-                start_index_pom = index
-                start_index = index + 9
-
-
-        line_list = []
-        line_list[:0] = line
-        while start_index >= start_index_pom:
-            if line_list[index].isnumeric():
-                pass
-            else:
-                if line_list[start_index] == ' ':
-                    line_list[start_index] = '-'
-                    line = ''.join(line_list)
-                    break
-                if line_list[start_index] == '-':
-                    line_list[start_index] = ' '
-                    line = ''.join(line_list)
-                    break
-            start_index = start_index - 1
-
-    if (re.search(pattern_W, line)):
-        for index, sign in enumerate(line):
-            if sign == 'W':
-                start_index_pom = index
-                start_index = index + 9
-
-        line_list = []
-        line_list[:0] = line
-
-        while start_index >= start_index_pom:
-            if line_list[index].isnumeric():
-                pass
-            else:
-                if line_list[start_index] == ' ':
-                    line_list[start_index] = '-'
-                    line = ''.join(line_list)
-                    break
-                if line_list[start_index] == '-':
-                    line_list[start_index] = ' '
-                    line = ''.join(line_list)
-                    break
-            start_index = start_index - 1
-
-        # print(line)
-
-
-   # line = line + "\n"
+    for letter in list_of_arguments:
+        print(letter)
+        print("test")
+        pattern = "\s[" + letter + "]\s\=\s{2,5}[-]{0,1}\d{0,4}\."
+        if (re.search(pattern, line)):
+            for index, sign in enumerate(line):
+                if sign == letter:
+                    start_index_pom = index
+                    start_index = index + 9
+            line_list = []
+            line_list[:0] = line
+            while start_index >= start_index_pom:
+                if line_list[start_index_pom].isnumeric():
+                    pass
+                else:
+                    if line_list[start_index] == ' ':
+                        line_list[start_index] = '-'
+                        # line = ''.join(line_list)
+                        break
+                    if line_list[start_index] == '-':
+                        line_list[start_index] = ' '
+                        # line = ''.join(line_list)
+                        break
+                start_index = start_index - 1
+            line = ''.join(line_list)
     file2.write(line)
+
+
 print("Finish")
 
 
