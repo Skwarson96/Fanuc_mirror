@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 import re
 import os
 from pathlib import Path
@@ -48,7 +50,7 @@ for line in file:
                     break
 
             start_index = start_index - 1
-        print(line)
+        # print(line)
 
     if(re.search(pattern_R, line)):
         for index, sign in enumerate(line):
@@ -96,12 +98,12 @@ for line in file:
                     break
             start_index = start_index - 1
 
-        print(line)
+        # print(line)
 
 
    # line = line + "\n"
     file2.write(line)
-   # print(line)
+print("Finish")
 
 
 
