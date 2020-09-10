@@ -6,7 +6,7 @@ $ ./fanuc_mirror.py --X X --Y Y --Z Z --W W --P P --R R
 
 By adding or removing individual arguments you choose which coordinates or orientations you want to change.
 
-For example, to mirror the program along the Y axis of the base, you need to change the sign at the Y coordinate and the W and R orientations. The command to run the program will look like this:
+For example: to mirror the program along the Y axis of the base, you need to change the sign at the Y coordinate and the W and R orientations. The command to run the program will look like this:
 
 $ ./fanuc_mirror.py --Y Y --W W --R R
 
