@@ -29,25 +29,36 @@ if arguments.P:
     list_of_arguments.append(arguments.P)
 if arguments.R:
     list_of_arguments.append(arguments.R)
-print(list_of_arguments)
+
 
 p = Path('mirror/')
 p.mkdir(exist_ok=True)
 
 
 txtfiles = []
-for file in glob.glob("*.txt"):
+for file in glob.glob("*.ls"):
     txtfiles.append(file)
-filename = txtfiles[0]
 
+
+if txtfiles == []:
+    print("File open filed")
+    exit()
+else:
+    print("File open correct")
+
+
+filename = txtfiles[0]
 file = open(filename, "r")
-filename = filename[:-4]
-file2 = open("mirror/"+filename+"_mirror.txt", "w+")
+
+filename = filename[:-3]
+file2 = open("mirror/"+filename+"_mirror.ls", "w+")
 
 for line in file:
+    # change first line with name of program
+    if line[0:5] == "/PROG":
+        line = "/PROG " + filename + "_mirror\n"
+    # change the sign in front of selected letters
     for letter in list_of_arguments:
-        print(letter)
-        print("test")
         pattern = "\s[" + letter + "]\s\=\s{2,5}[-]{0,1}\d{0,4}\."
         if (re.search(pattern, line)):
             for index, sign in enumerate(line):
@@ -74,7 +85,7 @@ for line in file:
 
 
 print("Finish")
-
+print("Made by Skwarson96")
 
 
 
